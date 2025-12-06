@@ -6,8 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-
-
 @Entity
 @Table(name = "productos")
 public class Producto {
@@ -20,11 +18,12 @@ public class Producto {
 
     private Double precio;
 
-    // Costructor vacio requerido JPA
-    public Producto() {
+    private String imagenUrl;
 
+    // Constructor vacío requerido por JPA
+    public Producto() {
     }
-    
+
     // Constructor con parámetros
     public Producto(String nombre, Double precio) {
         this.nombre = nombre;
@@ -56,13 +55,21 @@ public class Producto {
         this.precio = precio;
     }
 
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
     @Override
     public String toString() {
         return "Producto{" +
-        "id=" + id + 
-        ", nombre=" + nombre + "\" "+
-        ", precio=" +" precio" + "}";
-        
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", precio=" + precio +
+                ", imagen='" + imagenUrl + '\'' +
+                '}';
     }
-
-} 
+}   

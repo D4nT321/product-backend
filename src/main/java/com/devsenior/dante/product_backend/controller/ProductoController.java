@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/productos")
+@CrossOrigin("http://localhost:4200")
 public class ProductoController {
 
     private final ProductoService productoService;
@@ -29,9 +29,9 @@ public class ProductoController {
     // GET - Obtener un producto por ID
     @GetMapping("/{id}")
     public ResponseEntity<Producto> getProductoById(@PathVariable Long id) {
-         return  productoService.findById(id)
-        .map(producto -> ResponseEntity.ok(producto))
-        .orElse(ResponseEntity.notFound().build());
+        return productoService.findById(id)
+                .map(producto -> ResponseEntity.ok(producto))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     // POST - Crear un nuevo producto
@@ -45,15 +45,14 @@ public class ProductoController {
     @PutMapping("/{id}")
     public ResponseEntity<Producto> updateProducto(@PathVariable Long id, @RequestBody Producto producto) {
         return productoService.findById(id)
-        .map(productoExistente -> {
-            productoExistente.setNombre(producto.getNombre());
-            productoExistente.setPrecio(producto.getPrecio());
-            Producto productoActualizado = productoService.save(productoExistente);
-            return ResponseEntity.ok(productoActualizado);
-        })
-            .orElse(RequestBody.notFound().build);
-        }
-    
+                .map(productoExistente -> {
+                    productoExistente.setNombre(producto.getNombre());
+                    productoExistente.setPrecio(producto.getPrecio());
+                    Producto productoActualizado = productoService.save(productoExistente);
+                    return ResponseEntity.ok(productoActualizado);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     // DELETE - Eliminar un producto por ID
     @DeleteMapping("/{id}")
